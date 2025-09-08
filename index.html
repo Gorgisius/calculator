@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="screen">
+            <p id="display">0</p>
+        </div>
+        <div class="buttons">
+            <button data-tipo="especial" data-accion="borrar">AC</button>
+            <button data-tipo="especial" data-accion="invertir">+/-</button>
+            <button data-tipo="especial" data-accion="porciento">%</button>
+            <button data-tipo="operacion" data-accion="division">/</button>
+            <button data-tipo="numero" data-valor="7">7</button>
+            <button data-tipo="numero" data-valor="8">8</button>
+            <button data-tipo="numero" data-valor="9">9</button>
+            <button data-tipo="operacion" data-accion="producto">*</button>
+            <button data-tipo="numero" data-valor="4">4</button>
+            <button data-tipo="numero" data-valor="5">5</button>
+            <button data-tipo="numero" data-valor="6">6</button>
+            <button data-tipo="operacion" data-accion="resta">-</button>
+            <button data-tipo="numero" data-valor="1">1</button>
+            <button data-tipo="numero" data-valor="2">2</button>
+            <button data-tipo="numero" data-valor="3">3</button>
+            <button data-tipo="operacion" data-accion="suma">+</button>
+            <button data-tipo="numero" data-valor="0" id="zero">0</button>
+            <button data-tipo="numero" data-valor=".">.</button>
+            <button data-tipo="especial" data-accion="resultado">=</button>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>

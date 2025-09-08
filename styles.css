@@ -1,0 +1,78 @@
+:root {
+    --tono1: #37353E;
+    --tono2: #44444E;
+    --tono3: #715A5A;
+    --tono4: #D3DAD9;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Or apply to all elements with * */
+    background-color: var(--tono1);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* Optional: More comprehensive reset for common elements */
+h1, h2, h3, h4, h5, h6, p, ul, ol, li, blockquote {
+    margin: 0;
+    padding: 0;
+}
+
+ul, ol {
+    list-style: none; /* Removes default list markers */
+}
+
+a {
+    text-decoration: none; /* Removes default underline from links */
+    color: inherit; /* Inherits color from parent */
+}
+
+.calculator{
+    background: var(--tono4);
+    height: 410px;
+    border-radius: 5px;
+
+    display: grid;
+    grid-template-rows: 100px 250px;
+    grid-template-columns: 300px;
+}
+
+.screen{
+    display: flex;
+    justify-content: end;
+
+    padding: 5px 10px;
+    margin: 10px;
+    grid-row: 1/2;
+    grid-column: 1/2;
+    background: white;
+}
+
+#display {
+    align-self: flex-end;
+    font-size: 30px;
+    white-space: pre;
+}
+
+.buttons {
+    height: 300px;
+    margin: 0 auto;
+    grid-row: 2/3;
+    grid-column: 1/2;
+    
+    display: grid;
+    grid-template-rows: repeat(5, 57px);
+    grid-template-columns: repeat(4, 67px);
+    gap: 3px;
+}
+
+#zero {
+    grid-row: span 1;
+    grid-column: span 2;
+}
