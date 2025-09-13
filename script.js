@@ -1,6 +1,7 @@
 const display = document.getElementById("display");
 const botones = document.querySelectorAll("button");
 const operadores = ["+", "-", "/", "*", "%"];
+const toggleTheme = document.getElementById("theme-toggle");
 
 // Botones
 const igual = document.getElementById("igual");
@@ -31,7 +32,15 @@ let lastResult = 0;
 
 // Function to update display
 function updateDisplay() {
-    display.innerText = first_num + current_operator + second_num;
+    let second_num_parsed;
+    let first_num_parsed = parseFloat(first_num).toLocaleString('en-US', {maximumFractionDigits: 6});
+    if (second_num === "") { // Si no hay second_num, no hay parseo
+        second_num_parsed = "";
+    } else {
+        second_num_parsed = parseFloat(second_num).toLocaleString('en-US', {maximumFractionDigits: 6});
+    }
+    let formatted_result = first_num_parsed + current_operator + second_num_parsed;
+    display.innerText = formatted_result;
 }
 
 function result() {
@@ -43,7 +52,7 @@ function result() {
     updateDisplay();
 }
 
-// Link keys to
+// Link keys to buttons
 document.addEventListener("keydown", function(e) {
     const pressedKey = e.key;
     if (pressedKey === "Enter"){
@@ -103,11 +112,11 @@ botones.forEach(boton => {
                 return; // Evitar agregar ceros a la izquierda en el primer numero
             }
             // Si es first_num
-            if (!after) {
+            if (!after && first_num.length < 10) { //Limitar a 10 digitos
                 first_num += boton.dataset.valor;
                 updateDisplay();
             // Si es second_num
-            } else {
+            } else if (after && second_num.length < 10) { //Limitar a 10 digitos
                 second_num += boton.dataset.valor;
                 updateDisplay();
             }
@@ -143,20 +152,26 @@ botones.forEach(boton => {
             }
             // Invertir signo
             if (boton.dataset.accion === "invertir") {
-                if (!after) {
-                    if (first_num.includes("-")){
+                // Si en el primer numero
+                if (!after && first_num !== "") {
+                    // Si ya es negativo
+                    if (first_num.includes("-")){ // Quitar signo negativo
                         first_num = first_num.slice(1);
                         updateDisplay();
                     } else {
-                        first_num = "-" + first_num;
+                    // Si no es negativo
+                        first_num = "-" + first_num; // Agregar signo negativo
                         updateDisplay();
                     }
-                } else {
-                    if (second_num.includes("-")){
+                // Si en el segundo numero
+                } else if (after){
+                    // Si ya es negativo
+                    if (second_num.includes("-")){ // Quitar signo negativo
                         second_num = second_num.slice(1);
                         updateDisplay();
+                    // Si no es negativo
                     } else {
-                        second_num = "-" + second_num;
+                        second_num = "-" + second_num; // Agregar signo negativo
                         updateDisplay();
                     }
                 }
@@ -164,3 +179,16 @@ botones.forEach(boton => {
         }
     });
 });
+
+toggleTheme.addEventListener("click", () => {
+    document.body.classList.toggle("dark-theme");
+    if (document.body.classList.contains("dark-theme")) {
+        localStorage.setItem("theme", "dark");
+    } else {
+        localStorage.setItem("theme", "light");
+    }
+});
+
+if(localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-theme");
+}

@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Calculator</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="calculator">
         <div class="screen">
+            <div class="switch-theme">
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <p id="display2"></p>
             <p id="display">0</p>
         </div>
         <div class="buttons">
@@ -30,7 +40,7 @@
             <button data-tipo="operacion" data-accion="suma" id="sumar">+</button>
             <button data-tipo="numero" data-valor="0" id="zero">0</button>
             <button data-tipo="numero" data-valor="." id="punto">.</button>
-            <button data-tipo="especial" data-accion="resultado" id="igual">=</button>
+            <button class="gradiente" data-tipo="especial" data-accion="resultado" id="igual">=</button>
         </div>
     </div>
 </body>
