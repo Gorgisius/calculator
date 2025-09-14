@@ -1,4 +1,5 @@
 const display = document.getElementById("display");
+const display2 = document.getElementById("display2");
 const botones = document.querySelectorAll("button");
 const operadores = ["+", "-", "/", "*", "%"];
 const toggleTheme = document.getElementById("theme-toggle");
@@ -30,26 +31,25 @@ let current_operator = "";
 let second_num = "";
 let lastResult = 0;
 
-// Function to update display
-function updateDisplay() {
-    let second_num_parsed;
+// Functions to update displays
+function updateDisplay2() {
     let first_num_parsed = parseFloat(first_num).toLocaleString('en-US', {maximumFractionDigits: 6});
-    if (second_num === "") { // Si no hay second_num, no hay parseo
-        second_num_parsed = "";
-    } else {
-        second_num_parsed = parseFloat(second_num).toLocaleString('en-US', {maximumFractionDigits: 6});
-    }
-    let formatted_result = first_num_parsed + current_operator + second_num_parsed;
-    display.innerText = formatted_result;
+    display2.innerText = first_num_parsed + current_operator;
 }
 
-function result() {
-    lastResult = eval(`${first_num} ${current_operator} ${second_num}`);
-    first_num = lastResult;
-    current_operator = "";
-    second_num = "";
-    after = false;
-    updateDisplay();
+function updateDisplay() {
+    if (!after) {
+        // let first_num_parsed = parseFloat(first_num).toLocaleString('en-US', {maximumFractionDigits: 6});
+        // display.innerText = first_num_parsed;
+        display.innerText = first_num;
+        return;
+    }
+     else {
+        // second_num_parsed = parseFloat(second_num).toLocaleString('en-US', {maximumFractionDigits: 6});
+        // display.innerText = second_num_parsed;
+        display.innerText = second_num;
+        return;
+    }
 }
 
 // Link keys to buttons
@@ -123,11 +123,12 @@ botones.forEach(boton => {
 
         // Operadores
         } else if (tipo === "operacion") {
-            // Cambiar operador si no hay segundo numero aun
+            // Cambiar operador si no hay segundo numero aun y ya hay first_num
             if (first_num !== "" && second_num === "") {
                 current_operator = boton.innerText;
                 after = true;
-                updateDisplay();
+                updateDisplay2();
+                
             // Calcular resultado y seguir operando si ya hay segundo numero
             } else if (first_num !== "" && second_num !== "") {
                 result();
@@ -141,6 +142,7 @@ botones.forEach(boton => {
             // Borrar AC
             if (boton.dataset.accion === "borrar") {
                 display.innerText = 0;
+                display2.innerText = "";
                 first_num = "";
                 current_operator = "";
                 second_num = "";
@@ -148,7 +150,16 @@ botones.forEach(boton => {
             }
             // Calcular resultado
             if (boton.dataset.accion === "resultado") {
-                result();
+                lastResult = eval(`${first_num} ${current_operator} ${second_num}`);
+                let display2_current = display2.innerText;
+                let second_num_parsed = parseFloat(second_num).toLocaleString('en-US', {maximumFractionDigits: 6});
+                display2.innerText = display2_current + second_num_parsed + "=";
+
+                first_num = lastResult;
+                current_operator = "";
+                second_num = "";
+                after = false;
+                updateDisplay();
             }
             // Invertir signo
             if (boton.dataset.accion === "invertir") {
@@ -165,6 +176,11 @@ botones.forEach(boton => {
                     }
                 // Si en el segundo numero
                 } else if (after){
+                    if (second_num === "") {
+                        second_num = "-" + first_num;
+                        updateDisplay();
+                        return;
+                    }
                     // Si ya es negativo
                     if (second_num.includes("-")){ // Quitar signo negativo
                         second_num = second_num.slice(1);
